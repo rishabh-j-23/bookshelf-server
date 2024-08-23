@@ -48,12 +48,7 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public Object loginUser(@RequestBody User user) {
-        User verifiedUser = userService.verifyUser(user);
-        if (verifiedUser == null) {
-            return new ResponseEntity<>("invalid credentials", HttpStatus.UNAUTHORIZED);
-        }
-        verifiedUser.setPassword(null);
-        return verifiedUser;
+    public String loginUser(@RequestBody User user) {        
+        return userService.verifyUser(user);
     }
 }
