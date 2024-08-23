@@ -1,4 +1,4 @@
-package io.rishabh.bookshelf_server.books;
+package io.rishabh.bookshelf_server.model;
 
 import java.util.List;
 import java.util.UUID;

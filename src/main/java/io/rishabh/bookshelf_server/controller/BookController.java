@@ -1,4 +1,4 @@
-package io.rishabh.bookshelf_server.books;
+package io.rishabh.bookshelf_server.controller;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.rishabh.bookshelf_server.model.Book;
+import io.rishabh.bookshelf_server.repository.BookRepository;
 import jakarta.annotation.Nonnull;
 
 @RestController

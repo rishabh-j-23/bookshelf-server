@@ -1,4 +1,4 @@
-package io.rishabh.bookshelf_server.users;
+package io.rishabh.bookshelf_server.model;
 
 import java.util.UUID;
 
