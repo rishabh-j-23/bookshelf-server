@@ -32,7 +32,7 @@ public class BookController {
         return bookRepository.findAll();
     }
 
-    @PostMapping("/book/add")
+    @PostMapping("/books/add")
     public Object newBook(@RequestBody @Nonnull Book newBook) {
         try {
             // check if book already exists
@@ -48,14 +48,14 @@ public class BookController {
         }
     }
 
-    @GetMapping("/book/{id}")
+    @GetMapping("/books/{id}")
     public ResponseEntity<Book> one(@PathVariable UUID id) {
         Book book = bookRepository.findById(id).orElse(null);
         return book != null ? new ResponseEntity<>(book, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/book/update/{id}")
+    @PutMapping("/books/update/{id}")
     public ResponseEntity<Book> updateBookWithId(@PathVariable UUID id, @RequestBody Book updatedBook) {
         return bookRepository.findById(id).map(book -> {
             book.set(updatedBook);
@@ -64,7 +64,7 @@ public class BookController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("/book/delete/{id}")
+    @DeleteMapping("/books/delete/{id}")
     public ResponseEntity<String> deleteBookWithId(@PathVariable UUID id, @RequestHeader UUID addedbyUserId) {
         // check if book is created by user
         Book book = bookRepository.findById(id).orElse(null);

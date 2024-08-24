@@ -1,4 +1,4 @@
-package io.rishabh.bookshelf_server.auth.roles;
+package io.rishabh.bookshelf_server.security.auth.roles;
 
 public enum UserRole {
     ADMIN,

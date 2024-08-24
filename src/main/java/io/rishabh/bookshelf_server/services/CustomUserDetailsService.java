@@ -5,9 +5,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import io.rishabh.bookshelf_server.auth.UserPrincipal;
 import io.rishabh.bookshelf_server.model.User;
 import io.rishabh.bookshelf_server.repository.UserRepository;
+import io.rishabh.bookshelf_server.security.auth.UserPrincipal;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 

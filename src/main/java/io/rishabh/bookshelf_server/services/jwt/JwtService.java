@@ -2,8 +2,7 @@ package io.rishabh.bookshelf_server.services.jwt;
 
 import java.util.Map;
 
-import javax.crypto.KeyGenerator;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,8 @@ import java.util.HashMap;
 @Service
 public class JwtService {
 
-    private String SECRET_KEY = "409fb810ee275383abbb9d7ef91d742a48adbbf749c5bcdc874ed699765453bf";
+    @Value("${jwt.secret.key}")
+    private String SECRET_KEY;
 
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();

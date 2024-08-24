@@ -1,4 +1,4 @@
-package io.rishabh.bookshelf_server.filters;
+package io.rishabh.bookshelf_server.security.jwt.filters;
 
 import java.io.IOException;
 
@@ -27,6 +27,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {

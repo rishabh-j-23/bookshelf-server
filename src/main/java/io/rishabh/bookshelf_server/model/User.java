@@ -28,6 +28,13 @@ public class User {
     private String password;
     private String role = null;
 
+    public User(String username, String name, String email, String password) {
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
     public String toString() {
         return "User{" +
                 "id=" + id +

@@ -1,4 +1,4 @@
-package io.rishabh.bookshelf_server.auth;
+package io.rishabh.bookshelf_server.security.auth;
 
 import java.util.Collection;
 import java.util.Collections;
