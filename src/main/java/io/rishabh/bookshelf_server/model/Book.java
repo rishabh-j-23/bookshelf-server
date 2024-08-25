@@ -1,11 +1,13 @@
 package io.rishabh.bookshelf_server.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -19,7 +21,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "books")
-public class Book {
+public class Book implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @UuidGenerator
@@ -34,23 +38,22 @@ public class Book {
     private int pages;
     private String language = null;
     private String coverImage = null;
-    private List<String> readOnPlatforms = null;
     private String series = null;
     private String edition = null;
     private String volume = null;
+    private List<String> readOnPlatforms = null;
     private List<String> genres = null;
     private List<String> tags = null;
     private long favoritedBy = 0;
     private UUID addedByUser;
 
-    public Book(String title, String author, int pages) {
+    public Book(UUID uuid, String title, String author, String string, double d, int pages, String string2, String string3, int i, String string4, String string5, List<String> list, String string6, String string7, String string8, List<String> list2, List<String> list3, int j, UUID uuid2) {
         this.title = title;
         this.author = author;
         this.pages = pages;
     }
 
     public void set(Book book) {
-        
         this.title = book.title;
         this.author = book.author;
         this.description = book.description;
