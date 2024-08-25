@@ -59,7 +59,7 @@ public class BookController {
     @DeleteMapping("/books/delete/{id}")
     public ResponseEntity<String> deleteBookWithId(@PathVariable UUID id, @RequestHeader UUID addedbyUserId) {
         try {
-            boolean isDeleted = bookService.deleteBook(id, addedbyUserId);
+            bookService.deleteBook(id, addedbyUserId);
             return new ResponseEntity<>("Book deleted successfully", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
