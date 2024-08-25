@@ -15,66 +15,54 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.rishabh.bookshelf_server.model.Book;
-import io.rishabh.bookshelf_server.repository.BookRepository;
+import io.rishabh.bookshelf_server.services.BookService;
 import jakarta.annotation.Nonnull;
 
 @RestController
 public class BookController {
 
-    BookRepository bookRepository;
+    private final BookService bookService;
 
-    public BookController(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
     }
 
     @GetMapping("/books")
     public List<Book> getBooks() {
-        return bookRepository.findAll();
+        return bookService.getAllBooks();
     }
 
     @PostMapping("/books/add")
-    public Object newBook(@RequestBody @Nonnull Book newBook) {
+    public ResponseEntity<Object> newBook(@RequestBody @Nonnull Book newBook) {
         try {
-            // check if book already exists
-            Book existingBook = bookRepository.findByTitle(newBook.getTitle());
-            if (existingBook != null) {
-                return new ResponseEntity<>("Book already exists", HttpStatus.CONFLICT);
-            }
-            
-            Book savedBook = bookRepository.save(newBook);
+            Book savedBook = bookService.addNewBook(newBook);
             return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
     @GetMapping("/books/{id}")
     public ResponseEntity<Book> one(@PathVariable UUID id) {
-        Book book = bookRepository.findById(id).orElse(null);
+        Book book = bookService.getBookById(id);
         return book != null ? new ResponseEntity<>(book, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/books/update/{id}")
     public ResponseEntity<Book> updateBookWithId(@PathVariable UUID id, @RequestBody Book updatedBook) {
-        return bookRepository.findById(id).map(book -> {
-            book.set(updatedBook);
-            Book savedBook = bookRepository.save(book);
-            return new ResponseEntity<>(savedBook, HttpStatus.OK);
-        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Book book = bookService.updateBook(id, updatedBook);
+        return book != null ? new ResponseEntity<>(book, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/books/delete/{id}")
     public ResponseEntity<String> deleteBookWithId(@PathVariable UUID id, @RequestHeader UUID addedbyUserId) {
-        // check if book is created by user
-        Book book = bookRepository.findById(id).orElse(null);
-        if (book == null) {
-            return new ResponseEntity<>("Book not found", HttpStatus.NOT_FOUND);
-        } else if (!book.getAddedByUser().equals(addedbyUserId)) {
-            return new ResponseEntity<>("You are not authorized to delete this book", HttpStatus.UNAUTHORIZED);
-        } else {
-            bookRepository.deleteById(id);
+        try {
+            boolean isDeleted = bookService.deleteBook(id, addedbyUserId);
             return new ResponseEntity<>("Book deleted successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
 }
